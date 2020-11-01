@@ -23,7 +23,7 @@ fun numToNote(num: Int): String {
 }
 
 fun main(args: Array<String>) {
-    val path = "250Hz_44100Hz_16bit_05sec.wav"
+    val path = "samples/250Hz_44100Hz_16bit_05sec.wav"
     val wav_file = File(path)
     if (!wav_file.exists())
         print("File not found")
