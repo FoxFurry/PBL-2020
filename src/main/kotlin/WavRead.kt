@@ -61,8 +61,8 @@ class WavRead constructor(path: File){
                 if (j < sampleSizeInBytes - 1) ival = ival shl 8
             }
             val ratio = Math.pow(2.0, data_format!!.sampleSizeInBits - 1.toDouble())
-            val `val` = ival.toDouble() / ratio
-            audioSamples[i] = `val`
+            val sampleVal = ival.toDouble() / ratio
+            audioSamples[i] = sampleVal
         }
     }
 }
