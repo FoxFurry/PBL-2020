@@ -1,0 +1,11 @@
+.idea
+.gradle
+build
+datasets
+gradle
+gradle.properties
+gradlew
+gradlew.bat
+setting.gradle.kts
+*.mid
+*.txt
