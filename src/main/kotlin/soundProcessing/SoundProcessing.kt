@@ -45,6 +45,7 @@ class SoundProcessing {
             throw(Exception("Error getting midi type data"))
         }
 
+
         val midiToStringData = MidiProcessing().midiToString(sourceFile) ?: throw(Exception("REFACTOR THHIS"))
 
         sourceFile = sourceBuffer
