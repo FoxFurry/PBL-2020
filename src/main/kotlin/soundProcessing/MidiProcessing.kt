@@ -24,9 +24,9 @@ class MidiProcessing {
                         messageVector.add(midiMessage)
                     else if (midiMessage is ShortMessage) {
                         val key = midiMessage.data1
-                        if (midiMessage.command == NOTE_ON_LH && midiMessage.data2!=0) {
+                        if (midiMessage.command == NOTE_ON_SIGNAL && midiMessage.data2!=0) {
                             output += tickToString(midiEvent.tick - lastTick)
-                            output += (NOTE_ON_OFFSET + key).toChar()
+                            output += (NOTE_ON_ASCII_OFFSET + key).toChar()
                             lastTick = midiEvent.tick
                         }
                     }
@@ -64,10 +64,10 @@ class MidiProcessing {
         val notesPressed = ArrayList<Int>()
         source.first.forEach {
             when(it.toInt()){
-                in 0..tickTranlate.size+TICK_OFFSET -> {
-                    tick += tickTranlate[it.toInt() - TICK_OFFSET]
+                in 0..tickTranlate.size+TICK_ASCII_OFFSET -> {
+                    tick += tickTranlate[it.toInt() - TICK_ASCII_OFFSET]
                 }
-                in NOTE_ON_OFFSET..181 -> {
+                in NOTE_ON_ASCII_OFFSET..181 -> {
                     midiTrack.add(noteOnEvent(tick.toLong(), it.toInt()))
                     midiTrack.add(noteOffEvent(tick.toLong()+300, it.toInt()))
                 }
@@ -133,7 +133,7 @@ class MidiProcessing {
         tickTranlate.forEachIndexed { index, element ->
             val steps = ticks / element
             if (steps != 0L) {
-                output += (index + TICK_OFFSET).toChar().toString().repeat(steps.toInt())
+                output += (index + TICK_ASCII_OFFSET).toChar().toString().repeat(steps.toInt())
                 ticks -= steps * element
             }
         }
@@ -142,13 +142,13 @@ class MidiProcessing {
 
     private fun noteOnEvent(tick: Long, note: Int): MidiEvent {
         val midiMessage = ShortMessage()
-        midiMessage.setMessage(0x90, note-NOTE_ON_OFFSET, 0x40)
+        midiMessage.setMessage(0x90, note-NOTE_ON_ASCII_OFFSET, 0x40)
         return MidiEvent(midiMessage, tick)
     }
 
     private fun noteOffEvent(tick: Long, note: Int): MidiEvent {
         val midiMessage = ShortMessage()
-        midiMessage.setMessage(0x80, note-NOTE_ON_OFFSET, 0x40)
+        midiMessage.setMessage(0x80, note-NOTE_ON_ASCII_OFFSET, 0x40)
         return MidiEvent(midiMessage, tick)
     }
 
