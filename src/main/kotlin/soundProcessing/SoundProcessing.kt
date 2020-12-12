@@ -54,7 +54,7 @@ class SoundProcessing {
 
         tempBuffer.delete()
 
-        //println("Success <${sourceFile.name}>")
+        println("Success <${sourceFile.name}>")
         return midiToStringData.first
     }
 
