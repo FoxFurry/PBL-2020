@@ -4,9 +4,10 @@ import java.io.File
 import javax.sound.midi.MetaMessage
 import kotlin.math.max
 
-const val TICK_ASCII_OFFSET = 35
-const val NOTE_ON_ASCII_OFFSET = 50     // 122 notes are getting out of standard ASCII. Consider using utf-8
-const val NOTE_ON_SIGNAL = 0x90
+const val TICK_ASCII_OFFSET     = 35
+const val NOTE_ON_ASCII_OFFSET  = 50     // 122 notes are getting out of standard ASCII. Consider using utf-8
+const val NOTE_ON_SIGNAL        = 0x90
+const val NOTE_COUNT            = 122
 
 val tickTranlate = arrayOf(6144, 3072, 1536, 768, 384, 192, 64, 32, 8, 2)
 
