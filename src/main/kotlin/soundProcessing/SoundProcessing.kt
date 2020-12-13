@@ -26,39 +26,41 @@ class SoundProcessing {
 
     fun toText(): String {
         if (sourceFile.extension == "wav" || sourceFile.extension == "mp3") {
-            throw(Exception("Wav and mp3 are not supported"))
+            throw(MidiDecodingException("Wav and mp3 are not supported"))
         } else if (sourceFile.extension != "midi" && sourceFile.extension != "mid") {
-            throw(Exception("Unrecognized extension"))
+            throw(MidiDecodingException("Unrecognized extension"))
         }
 
         val sourceBuffer = sourceFile
         val tempBuffer = File("tmp_of.tmp")
+
+        tempBuffer.deleteOnExit()
+
         val currentMidiType = MidiProcessing().getType(sourceFile)
-
-        if (currentMidiType > 0) {
-            if (MidiProcessing().midiTypeConvert(sourceFile, tempBuffer) != 1) {
-                throw(Exception("Error converting midi type to zero"))
-            } else {
+        try{
+            if (currentMidiType > 0) {
+                MidiProcessing().midiTypeConvert(sourceFile, tempBuffer)
                 sourceFile = tempBuffer
+            } else if (currentMidiType < 0) {
+                throw(Exception("Error getting midi type data"))
             }
+
+            val midiToStringData = MidiProcessing().midiToString(sourceFile)
+
+            sourceFile = sourceBuffer
+            lastMessagesList = midiToStringData.second
+            lastMidiResolution = max(24, midiToStringData.third)
+
+            tempBuffer.delete()
+
+            println("Success <${sourceFile.name}>")
+            return midiToStringData.first
+        }catch(e:Exception){
+            throw e;
         }
-        else if (currentMidiType < 0) {
-            throw(Exception("Error getting midi type data"))
-        }
-
-        val midiToStringData = MidiProcessing().midiToString(sourceFile) ?: throw(Exception("REFACTOR THHIS"))
-
-        sourceFile = sourceBuffer
-        lastMessagesList = midiToStringData.second
-        lastMidiResolution = max(24, midiToStringData.third)
-
-        tempBuffer.delete()
-
-        println("Success <${sourceFile.name}>")
-        return midiToStringData.first
     }
 
-    fun toMidi(source: String, output: String): Int? {
+    fun toMidi(source: String, output: String): Int {
         if (source.isEmpty()) {
             throw(Exception("Source string is empty. Looks like conversion was not successful."))
         }

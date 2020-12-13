@@ -19,7 +19,11 @@ fun main(args: Array<String>) {
 
     var tmp = "datasets/beeth/mond_3.mid"
 
-    val soundEngine = SoundProcessing(tmp)
-    tmp = soundEngine.toText()?:return
-    soundEngine.toMidi(tmp, "mond_3")
+    try{
+        val soundEngine = SoundProcessing(tmp)
+        tmp = soundEngine.toText()
+        soundEngine.toMidi(tmp, "mond_3")
+    }catch(e: Exception){
+        println(e.message)
+    }
 }

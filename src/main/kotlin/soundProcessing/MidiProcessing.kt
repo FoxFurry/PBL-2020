@@ -2,6 +2,12 @@ package soundProcessing
 
 import java.io.File
 import javax.sound.midi.*
+import javax.sound.midi.MidiEvent
+
+import javax.sound.midi.MetaMessage
+
+
+
 
 class MidiProcessing {
 
@@ -52,6 +58,10 @@ class MidiProcessing {
         sysexMessage.setMessage(byteArrayOf(0xF0.toByte(), 0x7E, 0x7F, 0x09, 0x01, 0xF7.toByte()), 6)
         midiTrack.add(MidiEvent(sysexMessage, 0.toLong()))      // Set the MIDi init info
 
+//        var midiMeta = MetaMessage()
+//        midiMeta.setMessage(0x51, byteArrayOf(0x02, 0x00.toByte(), 0x00), 3)
+//        midiTrack.add(MidiEvent(midiMeta, 0.toLong()))
+
         source.second.forEach{
             midiTrack.add(MidiEvent(it,0.toLong()))      // Copying all meta-messages from original midi to extended
         }
@@ -74,7 +84,7 @@ class MidiProcessing {
             }
         }
 
-        val midiMeta = MetaMessage()
+        midiMeta = MetaMessage()
         midiMeta.setMessage(0x2F, byteArrayOf(), 0)        // Set the end of MIDI sequence
         midiTrack.add(MidiEvent(midiMeta, tick+100.toLong()))
 
