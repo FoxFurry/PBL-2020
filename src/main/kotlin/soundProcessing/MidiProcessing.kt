@@ -58,10 +58,6 @@ class MidiProcessing {
         sysexMessage.setMessage(byteArrayOf(0xF0.toByte(), 0x7E, 0x7F, 0x09, 0x01, 0xF7.toByte()), 6)
         midiTrack.add(MidiEvent(sysexMessage, 0.toLong()))      // Set the MIDi init info
 
-//        var midiMeta = MetaMessage()
-//        midiMeta.setMessage(0x51, byteArrayOf(0x02, 0x00.toByte(), 0x00), 3)
-//        midiTrack.add(MidiEvent(midiMeta, 0.toLong()))
-
         source.second.forEach{
             midiTrack.add(MidiEvent(it,0.toLong()))      // Copying all meta-messages from original midi to extended
         }
@@ -75,7 +71,8 @@ class MidiProcessing {
                 in NOTE_ON_ASCII_OFFSET..NOTE_ON_ASCII_OFFSET + NOTE_COUNT -> {
                     try {
                         midiTrack.add(noteOnEvent(tick.toLong(), it.toInt()))               // Adding note on
-                        midiTrack.add(noteOffEvent(tick.toLong() + 300, it.toInt()))    // Adding note off few moments later
+                        midiTrack.add(noteOffEvent(tick.toLong() + 300, it.toInt()))
+                                                                            // Adding note off few moments later
                     }
                     catch (e: Exception){
                         throw (e)
@@ -84,7 +81,7 @@ class MidiProcessing {
             }
         }
 
-        midiMeta = MetaMessage()
+        val midiMeta = MetaMessage()
         midiMeta.setMessage(0x2F, byteArrayOf(), 0)        // Set the end of MIDI sequence
         midiTrack.add(MidiEvent(midiMeta, tick+100.toLong()))
 

@@ -26,10 +26,7 @@ class WavRead constructor(path: File){
     }
 
     @Throws(IOException::class, IllegalArgumentException::class)
-    fun getInterleavedSamples(
-        begin: Long, end: Long,
-        samples: DoubleArray
-    ) {
+    fun getInterleavedSamples(begin: Long, end: Long,samples: DoubleArray){
         val nbSamples = end - begin
         val nbBytes = nbSamples * (data_format!!.sampleSizeInBits / 8) *
                 data_format!!.channels

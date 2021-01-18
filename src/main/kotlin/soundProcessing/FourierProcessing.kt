@@ -42,7 +42,8 @@ class FourierProcessing {
                 if(dt.isNotEmpty())
                     for(i in dt.indices){
                         if(dt[i].first<5)continue
-                        val freq = wav_data.getSampleRate().toDouble() * dt[i].second.toDouble() / (sampleSize.toDouble() / 2)
+                        val freq = wav_data.getSampleRate().toDouble() * dt[i].second.toDouble() /
+                                                                        (sampleSize.toDouble() / 2)
                         val note = numToNote(freqToNum(freq))
 
                         noteMagnitude[note] = noteMagnitude.getOrDefault(note, 0).toDouble() + dt[i].first

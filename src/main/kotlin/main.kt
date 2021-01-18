@@ -2,28 +2,32 @@ import soundProcessing.SoundProcessing
 import java.io.File
 
 fun main(args: Array<String>) {
-//    var output = ""
-//
-//    val soundEngine = SoundProcessing("tmp")
-//
-//    File("datasets/beeth").walk().forEach {
+    var output = ""
+
+    val soundEngine = SoundProcessing("tmp")
+
+//    File("datasets/classical2").walk().forEach {
 //        soundEngine.setFile(it)
 //
-//        val data = soundEngine.toText()
-//        if(data != null) {
-//            output+=data
+//        try{
+//            val data = soundEngine.toText()
+//            output += data
+//        }catch (e: Exception){
+//            println(e.message)
 //        }
 //    }
+
+    for(i in 33 until 200)
+        output+=i.toChar()
+    File("vocav_full.txt").writeText(output)
+
+//    var tmp = "datasets/classical2/02 Menuet.mid"
 //
-//    File("dataset_Beethoven.txt").writeText(output)
-
-    var tmp = "datasets/beeth/mond_3.mid"
-
-    try{
-        val soundEngine = SoundProcessing(tmp)
-        tmp = soundEngine.toText()
-        soundEngine.toMidi(tmp, "mond_3")
-    }catch(e: Exception){
-        println(e.message)
-    }
+//    try{
+//        val soundEngine = SoundProcessing(tmp)
+//        tmp = soundEngine.toText()
+//        soundEngine.toMidi(tmp, "mond_3")
+//    }catch(e: Exception){
+//        println(e.message)
+//    }
 }
